@@ -1,0 +1,11 @@
+<div>
+  <label>Name: </label>
+  <input id="name" [(ngModel)]="nameInput"/>
+  <br>
+  <label>Email: </label>
+  <input id="email" [(ngModel)]="emailInput"/>
+  <br>
+  <button (click)="addData()">Add</button>
+  <br><br>
+  <label id="addResult">{{addResult}}</label>
+</div>
