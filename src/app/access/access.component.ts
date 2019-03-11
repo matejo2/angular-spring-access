@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {catchError, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-access',
@@ -11,16 +13,49 @@ export class AccessComponent implements OnInit {
   dataToPost: string;
   nameInput = 'sample Name';
   emailInput = 'sample@mail.com';
+  private urlGet: string;
+  outputData: any;
+  private userData: {};
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
   }
 
   addData() {
-      alert('hello schabo, mein babo');
-      console.log('flsdöfkl');
+      const urlToPost = `http://localhost:8080/add2?name=${this.nameInput}&email=${this.emailInput}`;
+      const urlToAdd = 'http:localhost:8080/add'
+
+      const parameter = JSON.stringify({id : 42 , name: this.nameInput, email: this.emailInput});
+      try {
+        console.log(`name: ${this.nameInput} email: ${this.emailInput}`);
+        this.http.post(urlToAdd, parameter);
+        console.log('successful! ');
+      } catch (e) {
+        console.log('an exception occured: ' + e);
+      }
+
+      /*
+      $http.post(urlToPost, parameter).
+    success(function(data, status, headers, config) {
+      // this callback will be called asynchronously
+      // when the response is available
+      console.log(data);
+    }).
+    error(function(data, status, headers, config) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+    });
+      */
+  }
+
+  getData() {
+    this.urlGet = `http://localhost:8080/users`;
+
+
+    this.http.get(this.urlGet)
+      .subscribe(thisData => { console.log(thisData);} ); // this.outputData = thisData,
   }
 
   fun() {
@@ -42,5 +77,9 @@ export class AccessComponent implements OnInit {
       $scope.status = status; }
       );
 
+  }
+
+  private log(input: string) {
+    console.log(input);
   }
 }
